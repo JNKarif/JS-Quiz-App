@@ -38,7 +38,7 @@ const questions = [
 ];
 
 const questionElement = document.getElementById("question");
-const answerButton = document.getElementById("answer-button");
+const answerButtons = document.getElementById("answer-button");
 const nextButton = document.getElementById("next-btn");
 
 let currentQuestionIndex = 0;
@@ -47,20 +47,34 @@ function startQuiz() {
   currentQuestionIndex = 0;
   score = 0;
   nextButton.innerHTML = "Next";
+
+  //calling the all the question and answer options func()
   showQuestion();
 }
 
 function showQuestion() {
+  resetState();
   let currentQuestion = questions[currentQuestionIndex];
   let questionNumber = currentQuestionIndex + 1;
+
+  // Showing question
   questionElement.innerHTML = questionNumber + ". " + currentQuestion.question;
 
+  // Showing answer option
   currentQuestion.answers.map((ans) => {
     const button = document.createElement("button");
     button.innerHTML = ans.text;
     button.classList.add("btn");
-    answerButton.appendChild(button);
+    answerButtons.appendChild(button);
   });
+}
+
+// this func will remove all previous answers
+function resetState() {
+  nextButton.style.display = "none";
+  while (answerButtons.firstChild) {
+    answerButtons.removeChild(answerButtons.firstChild);
+  }
 }
 
 startQuiz();
